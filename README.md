@@ -65,6 +65,10 @@ export const globalTypes = {
   },
 };
 
+export const globals = {
+  rtlDirection: false,
+};
+
 export const parameters = {
   rtlDirection: {
     // Collection to set as RTL (You can add language or with add country code specifically)

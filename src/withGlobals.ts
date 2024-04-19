@@ -3,59 +3,94 @@ import type {
   PartialStoryFn as StoryFunction,
   StoryContext,
 } from "@storybook/types";
-import { useEffect, useGlobals } from "@storybook/preview-api";
-import { PARAM_KEY } from "./constants";
+import {
+  useRef,
+  useEffect,
+  useGlobals,
+  useParameter,
+} from "@storybook/preview-api";
+
+interface Settings {
+  // Collection for locales (e.g. "en", "en-US", "ar")
+  autoLocales?: string[];
+  // Condition to refresh page
+  reload?: boolean;
+}
+
+const updateHtmlLang = (locale?: string, settings?: Settings) => {
+  const lang = document.documentElement.getAttribute("lang");
+  if (!locale || !settings) return lang;
+  if (lang !== locale) {
+    document.documentElement.setAttribute("lang", locale);
+  }
+  return locale;
+};
 
 export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
-  context: StoryContext<Renderer>
+  context: StoryContext<Renderer>,
 ) => {
-  const [globals] = useGlobals();
-  const myAddon = globals[PARAM_KEY];
-  // Is the addon being used in the docs panel
-  const isInDocs = context.viewMode === "docs";
-  const { theme } = context.globals;
+  const [globals, updateGlobals] = useGlobals();
+  const settings: Settings = useParameter("rtlDirection");
+  const { current: htmlLang } = useRef(
+    updateHtmlLang(globals.locale, settings),
+  );
+
+  console.log("withGlobals::globals", globals);
+  console.log("context", context);
+  console.log("settings", settings);
+  console.log("withGlobals::rtlDirection", globals.rtlDirection);
 
   useEffect(() => {
-    // Execute your side effect here
-    // For example, to manipulate the contents of the preview
-    const selector = isInDocs
-      ? `#anchor--${context.id} .sb-story`
-      : "#storybook-root";
+    const direction = globals.rtlDirection ? "rtl" : "ltr";
+    document.documentElement.setAttribute("dir", direction);
+  }, [globals.rtlDirection]);
 
-    displayToolState(selector, {
-      myAddon,
-      isInDocs,
-      theme,
+  useEffect(() => {
+    // Check url and find
+    const urlParams = new URLSearchParams(window.location.search);
+    const globals = urlParams.get("globals");
+    if (!globals) return;
+    const [dir] = globals
+      .split(";")
+      .map((params) => {
+        return params.indexOf("rtlDirection:") === 0 && params.split(":")[1];
+      })
+      .filter(Boolean);
+    if (dir === "true") updateGlobals({ rtlDirection: true });
+  }, []);
+
+  useEffect(() => {
+    if (
+      !globals.locale ||
+      !settings ||
+      !settings.autoLocales ||
+      !settings.autoLocales.length
+    ) {
+      return;
+    }
+    const { autoLocales, reload } = settings;
+    const lang = globals.locale.substring(0, 2);
+    const isRtl = autoLocales.some((l) => {
+      return l.indexOf("-") === -1 ? l === lang : l === globals.locale;
     });
-  }, [myAddon, theme]);
+
+    console.log("lang", lang);
+    console.log("isRtl", isRtl);
+
+    updateGlobals({
+      ...globals,
+      rtlDirection: isRtl,
+    });
+
+    // If reload is true and locale is different than html lang, refresh page
+    if (reload && htmlLang !== globals.locale) {
+      // Add delay to make sure to update rtlDirection to global variables
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }
+  }, [globals.locale]);
 
   return StoryFn();
 };
-
-function displayToolState(selector: string, state: any) {
-  const rootElements = document.querySelectorAll(selector);
-
-  rootElements.forEach((rootElement) => {
-    let preElement = rootElement.querySelector<HTMLPreElement>(
-      `${selector} pre`
-    );
-
-    if (!preElement) {
-      preElement = document.createElement("pre");
-      preElement.style.setProperty("margin-top", "2rem");
-      preElement.style.setProperty("padding", "1rem");
-      preElement.style.setProperty("background-color", "#eee");
-      preElement.style.setProperty("border-radius", "3px");
-      preElement.style.setProperty("max-width", "600px");
-      preElement.style.setProperty("overflow", "scroll");
-      rootElement.appendChild(preElement);
-    }
-
-    preElement.innerText = `This snippet is injected by the withGlobals decorator.
-It updates as the user interacts with the ⚡ or Theme tools in the toolbar above.
-
-${JSON.stringify(state, null, 2)}
-`;
-  });
-}

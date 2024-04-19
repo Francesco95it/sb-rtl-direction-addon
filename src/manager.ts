@@ -1,8 +1,6 @@
 import { addons, types } from "@storybook/manager-api";
-import { ADDON_ID, TOOL_ID, PANEL_ID, TAB_ID } from "./constants";
 import { Tool } from "./Tool";
-import { Panel } from "./Panel";
-import { Tab } from "./Tab";
+import { ADDON_ID, TOOL_ID } from "./constants";
 
 /**
  * Note: if you want to use JSX in this file, rename it to `manager.tsx`
@@ -14,23 +12,8 @@ addons.register(ADDON_ID, () => {
   // Register the tool
   addons.add(TOOL_ID, {
     type: types.TOOL,
-    title: "My addon",
+    title: "RTL Direction",
     match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
     render: Tool,
-  });
-
-  // Register the panel
-  addons.add(PANEL_ID, {
-    type: types.PANEL,
-    title: "My addon",
-    match: ({ viewMode }) => viewMode === "story",
-    render: Panel,
-  });
-
-  // Register the tab
-  addons.add(TAB_ID, {
-    type: types.TAB,
-    title: "My addon",
-    render: Tab,
   });
 });
