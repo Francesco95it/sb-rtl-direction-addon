@@ -30,16 +30,14 @@ export const withGlobals = (
   StoryFn: StoryFunction<Renderer>,
   context: StoryContext<Renderer>,
 ) => {
-  const [globals, updateGlobals] = useGlobals();
+  const [{ locale, rtlDirection }, updateGlobals] = useGlobals();
   const settings: Settings = useParameter("rtlDirection");
-  const { current: htmlLang } = useRef(
-    updateHtmlLang(globals.locale, settings),
-  );
+  const { current: htmlLang } = useRef(updateHtmlLang(locale, settings));
 
   useEffect(() => {
-    const direction = globals.rtlDirection ? "rtl" : "ltr";
+    const direction = rtlDirection ? "rtl" : "ltr";
     document.documentElement.setAttribute("dir", direction);
-  }, [globals.rtlDirection]);
+  }, [rtlDirection]);
 
   useEffect(() => {
     // Check url and find
@@ -57,7 +55,7 @@ export const withGlobals = (
 
   useEffect(() => {
     if (
-      !globals.locale ||
+      !locale ||
       !settings ||
       !settings.autoLocales ||
       !settings.autoLocales.length
@@ -65,24 +63,25 @@ export const withGlobals = (
       return;
     }
     const { autoLocales, reload } = settings;
-    const lang = globals.locale.substring(0, 2);
+    const lang = locale.substring(0, 2);
     const isRtl = autoLocales.some((l) => {
-      return l.indexOf("-") === -1 ? l === lang : l === globals.locale;
+      return l.indexOf("-") === -1 ? l === lang : l === locale;
     });
 
-    updateGlobals({
-      ...globals,
-      rtlDirection: isRtl,
-    });
+    if (isRtl !== rtlDirection) {
+      updateGlobals({
+        rtlDirection: isRtl,
+      });
+    }
 
     // If reload is true and locale is different than html lang, refresh page
-    if (reload && htmlLang !== globals.locale) {
+    if (reload && htmlLang !== locale) {
       // Add delay to make sure to update rtlDirection to global variables
       setTimeout(() => {
         window.location.reload();
       }, 50);
     }
-  }, [globals.locale]);
+  }, [locale]);
 
   return StoryFn();
 };
