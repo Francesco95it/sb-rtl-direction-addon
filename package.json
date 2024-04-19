@@ -1,17 +1,20 @@
 {
-  "name": "storybook-addon-kit",
-  "version": "0.0.0",
-  "description": "everything you need to build a Storybook addon",
+  "name": "sb-rtl-direction-addon",
+  "version": "0.0.1",
+  "description": "A Storybook addon that embed Figma or websites in the addon panel for better design-development workflow.",
   "keywords": [
-    "storybook-addons"
+    "storybook",
+    "RTL",
+    "direction",
+    "storybook-addon"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybookjs/storybook-addon-kit"
+    "url": "https://github.com/Francesco95it/sb-rtl-direction-addon"
   },
   "type": "module",
   "license": "MIT",
-  "author": "package-author",
+  "author": "Francesco95it",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -97,9 +100,17 @@
     ]
   },
   "storybook": {
-    "displayName": "Addon Kit",
+    "displayName": "Storybook RTL Direction Addon",
     "supportedFrameworks": [
-      "supported-frameworks"
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   }
