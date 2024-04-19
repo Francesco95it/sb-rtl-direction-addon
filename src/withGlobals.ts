@@ -36,11 +36,6 @@ export const withGlobals = (
     updateHtmlLang(globals.locale, settings),
   );
 
-  console.log("withGlobals::globals", globals);
-  console.log("context", context);
-  console.log("settings", settings);
-  console.log("withGlobals::rtlDirection", globals.rtlDirection);
-
   useEffect(() => {
     const direction = globals.rtlDirection ? "rtl" : "ltr";
     document.documentElement.setAttribute("dir", direction);
@@ -74,9 +69,6 @@ export const withGlobals = (
     const isRtl = autoLocales.some((l) => {
       return l.indexOf("-") === -1 ? l === lang : l === globals.locale;
     });
-
-    console.log("lang", lang);
-    console.log("isRtl", isRtl);
 
     updateGlobals({
       ...globals,

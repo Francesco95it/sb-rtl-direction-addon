@@ -6,8 +6,6 @@ import { TOOL_ID } from "./constants";
 export const Tool = memo(function MyAddonSelector() {
   const [globals, updateGlobals] = useGlobals();
 
-  console.log("globals", globals);
-
   const toggleMyTool = useCallback(
     () =>
       updateGlobals({
@@ -15,8 +13,6 @@ export const Tool = memo(function MyAddonSelector() {
       }),
     [globals.rtlDirection],
   );
-
-  console.log("rtlDirection", globals.rtlDirection);
 
   return (
     <IconButton
