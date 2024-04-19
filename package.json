@@ -37,14 +37,11 @@
     "*.d.ts"
   ],
   "scripts": {
-    "postinstall": "node scripts/welcome.js",
     "build": "tsup",
     "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "run-p build:watch 'storybook --quiet'",
-    "prerelease": "zx scripts/prepublish-checks.js",
     "release": "npm run build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -77,6 +74,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "8.0.0",
+    "ts-dedent": "^2.2.0",
     "tsup": "^8.0.2",
     "typescript": "^5.4.2",
     "vite": "^5.1.6",
