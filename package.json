@@ -1,6 +1,6 @@
 {
   "name": "sb-rtl-direction-addon",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Storybook addon that embed Figma or websites in the addon panel for better design-development workflow.",
   "keywords": [
     "storybook",
