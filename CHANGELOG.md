@@ -1,3 +1,15 @@
+# v0.0.6 (Fri Apr 19 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: avoid infinite re-render after update ([@Francesco95it](https://github.com/Francesco95it))
+
+#### Authors: 1
+
+- Francesco Spagnolo ([@Francesco95it](https://github.com/Francesco95it))
+
+---
+
 # v0.0.5 (Fri Apr 19 2024)
 
 #### ⚠️ Pushed to `main`
