@@ -1,7 +1,7 @@
 {
   "name": "sb-rtl-direction-addon",
   "version": "0.0.7",
-  "description": "A Storybook addon that embed Figma or websites in the addon panel for better design-development workflow.",
+  "description": "Add RTL direction to your previews.",
   "keywords": [
     "storybook",
     "RTL",
