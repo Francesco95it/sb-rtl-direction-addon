@@ -1,3 +1,15 @@
+# v0.0.8 (Sat Apr 20 2024)
+
+#### ⚠️ Pushed to `main`
+
+- docs: update description ([@Francesco95it](https://github.com/Francesco95it))
+
+#### Authors: 1
+
+- Francesco Spagnolo ([@Francesco95it](https://github.com/Francesco95it))
+
+---
+
 # v0.0.7 (Fri Apr 19 2024)
 
 #### ⚠️ Pushed to `main`
