@@ -1,3 +1,15 @@
+# v0.0.9 (Mon Apr 22 2024)
+
+#### ⚠️ Pushed to `main`
+
+- fix: only autolocales trigger automatic change ([@Francesco95it](https://github.com/Francesco95it))
+
+#### Authors: 1
+
+- Francesco Spagnolo ([@Francesco95it](https://github.com/Francesco95it))
+
+---
+
 # v0.0.8 (Sat Apr 20 2024)
 
 #### ⚠️ Pushed to `main`
