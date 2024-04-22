@@ -70,8 +70,6 @@ export const withGlobals = (
 
     if (isRtl && !rtlDirection) {
       updateGlobals({ rtlDirection: true });
-    } else if (!isRtl && rtlDirection) {
-      updateGlobals({ rtlDirection: false });
     }
 
     // If reload is true and locale is different than html lang, refresh page
