@@ -1,6 +1,6 @@
 {
   "name": "sb-rtl-direction-addon",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Add RTL direction to your previews.",
   "keywords": [
     "storybook",
